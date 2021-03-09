@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 using System.Web.Configuration;
 using WcfService.Contracts.Request;
+using WcfService.Contracts.Response;
 using WcfService.Domain.Commands;
 using WcfService.Domain.Interfaces;
 using WcfService.Domain.Models;
+using WcfService.Domain.Providers;
 using WcfService.Domain.Queries;
 using WcfService.Domain.Services;
 using WcfService.Mapping;
@@ -15,6 +18,7 @@ namespace WcfService
     public class BookStore : IBookStore
     {
         private readonly IBookService _bookService;
+        private readonly IBookProvider _bookProvider;
 
         private readonly IMapper _mapper =
             new MapperConfiguration(mc => mc.AddProfile(new MappingProfile())).CreateMapper();
@@ -22,6 +26,7 @@ namespace WcfService
         public BookStore()
         {
             _bookService = new BookService(_mapper);
+            _bookProvider = new BookProvider(_mapper);
         }
 
         /// <summary>
@@ -62,10 +67,13 @@ namespace WcfService
             return "Bad";
         }
 
-        public int CreateBook(CreateBookRequest newBook)
+        public async Task<BookDisplayModel> CreateBook(CreateBookRequest newBook)
         {
             var newBookId = _bookService.CreateBook(_mapper.Map<CreateBookCommand>(newBook));
-            return newBookId;
+
+            var newBookReadModel = await _bookProvider.GetBookReadModelByIdAsync(newBookId);
+
+            return _mapper.Map<BookDisplayModel>(newBookReadModel);
         }
 
         public Book RemoveBook(int id)

@@ -1,5 +1,7 @@
 ﻿using System.ServiceModel;
+using System.Threading.Tasks;
 using WcfService.Contracts.Request;
+using WcfService.Contracts.Response;
 using WcfService.Domain.Models;
 
 namespace WcfService
@@ -12,7 +14,7 @@ namespace WcfService
         [OperationContract]
         string TestDbConnection();
         [OperationContract]
-        int CreateBook(CreateBookRequest newBook);
+        Task<BookDisplayModel> CreateBook(CreateBookRequest newBook);
         [OperationContract]
         Book RemoveBook(int id);
     }

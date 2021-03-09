@@ -151,7 +151,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51994</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/WcfService</IISUrl>
+          <IISUrl>http://localhost/WcfBookShop</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>https://somee.com</CustomServerUrl>
