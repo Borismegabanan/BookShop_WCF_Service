@@ -11,10 +11,16 @@ namespace WcfService
     {
         [OperationContract]
         string TestConnection();
+
         [OperationContract]
         string TestDbConnection();
+
         [OperationContract]
         Task<BookDisplayModel> CreateBook(CreateBookRequest newBook);
+
+        [OperationContract]
+        string GetLastMessageInQueue();
+
         [OperationContract]
         Book RemoveBook(int id);
     }
